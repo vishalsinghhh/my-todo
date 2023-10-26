@@ -1,6 +1,7 @@
 const CustomError = require("../errors");
 const jwt = require('jsonwebtoken')
-const User = require("../models/User")
+const db = require("../Models");
+const User = db.users;
 
 const authenticateUser = async (req, res, next) => {
   const authHeader = req.headers.authorization
@@ -9,8 +10,9 @@ const authenticateUser = async (req, res, next) => {
   }
   const token = authHeader.split(' ')[1]
   try {
-    const payload = jwt.verify(token, process.env.JWT_SECRET)
-    req.user = {userId: payload.userId}
+    const payload = jwt.verify(token, process.env.secretKey)
+
+    req.user = {userId: payload.id}
     next()
   } catch (error) {
     throw new CustomError.UnauthenticatedError('Authentication Invalid')

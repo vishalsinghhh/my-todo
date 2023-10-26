@@ -30,6 +30,7 @@ db.sequelize = sequelize;
 
 //connecting to model
 db.users = require("./userModel")(sequelize, DataTypes);
+db.lists = require("./listModel")(sequelize, DataTypes);
 
 //exporting the module
 module.exports = db;

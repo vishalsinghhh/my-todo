@@ -1,19 +1,31 @@
 module.exports = (sequelize, DataTypes) => {
-    const User = sequelize.define( "user", {
-        name: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        email: {
-            type: DataTypes.STRING,
-            unique: true,
-            isEmail: true, //checks for email format
-            allowNull: false
-        },
-        password: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-    }, {timestamps: true}, )
-    return User
- }
+  const User = sequelize.define("User", {
+      name: {
+          type: DataTypes.STRING,
+          allowNull: false
+      },
+      email: {
+          type: DataTypes.STRING,
+          unique: true,
+          allowNull: false,
+          validate: {
+              isEmail: true
+          }
+      },
+      password: {
+          type: DataTypes.STRING,
+          allowNull: false
+      }
+  }, {
+      timestamps: true
+  });
+
+  User.associate = models => {
+      User.hasMany(models.List, {
+          foreignKey: 'userId',
+          onDelete: 'CASCADE'
+      });
+  };
+
+  return User;
+};
