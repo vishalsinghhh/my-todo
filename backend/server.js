@@ -1,3 +1,4 @@
+require("express-async-errors");
 const express = require("express");
 const sequelize = require("sequelize");
 const dotenv = require("dotenv").config();
