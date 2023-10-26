@@ -6,10 +6,10 @@ const sequelize = new Sequelize(process.env.POSTGRES_DATABASE, process.env.POSTG
   host: process.env.POSTGRES_HOST,
   dialect: "postgres",
   port: 5432,
-  ssl: true, // Enable SSL
+  ssl: true, 
   dialectOptions: {
     ssl: {
-      require: true, // Force SSL
+      require: true,
     },
   },
 });

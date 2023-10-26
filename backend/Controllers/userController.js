@@ -41,6 +41,34 @@ const register = async (req, res) => {
     token,
   });
 };
+
+const login = async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    throw new CustomError.BadRequestError("Please provide all values");
+  }
+
+  const user = await User.findOne({
+    where: {
+      email: email,
+    },
+  });
+
+  if (!user) {
+    throw new CustomError.UnauthenticatedError("Invalid Credentials");
+  }
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    throw new CustomError.UnauthenticatedError("Invalid Credentials");
+  }
+  let token = jwt.sign({ id: user.id }, process.env.secretKey, {
+    expiresIn: 1 * 24 * 60 * 60 * 1000,
+  });
+  user.password = undefined;
+  res.status(StatusCodes.OK).json({ user, token });
+};
+
 module.exports = {
-    register
-  };
+  register,
+  login
+};
