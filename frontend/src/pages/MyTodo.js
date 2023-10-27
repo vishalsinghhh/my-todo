@@ -9,6 +9,7 @@ import "../components/Modal.css"
 
 const MyTodo = () => {
   const { getAllLists, createList } = useAppContext();
+  const [loading, setLoading] = useState(false)
   const [lists, setLists] = useState();
   const [listName, setListName] = useState()
   const [isModalOpen, setModalOpen] = useState(false);
@@ -17,7 +18,6 @@ const MyTodo = () => {
     setLists(res);
   };
   useEffect(() => {
-    
     fn();
   },[]);
 
@@ -30,9 +30,18 @@ const MyTodo = () => {
   };
 
   const onSubmit=async()=>{
-    await createList(listName)
-    const res = await getAllLists();
-    setLists(res);
+    if(listName){
+      return
+    }
+    try {
+      setLoading(true)
+      await createList(listName)
+      const res = await getAllLists();
+      setLists(res);
+    } catch (error) {
+      setLoading(false)
+    }
+    setLoading(false)
     setModalOpen(false)
   }
 
@@ -45,7 +54,7 @@ const MyTodo = () => {
       <Modal isOpen={isModalOpen} closeModal={closeModal}>
         <h2>Create list</h2>
         <input type="text" onChange={(e)=>{setListName(e.target.value)}}/>
-        <button onClick={()=>{onSubmit()}}>Create</button>
+        <button onClick={()=>{onSubmit()}} className="createBTN">{!loading?'Create':'loading...'}</button>
       </Modal>
         <div className="listMain">
           {lists?.lists.map((item, i) => {
