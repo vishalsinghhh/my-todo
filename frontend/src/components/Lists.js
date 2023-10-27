@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Lists.css";
 import { GrAddCircle } from "react-icons/gr";
+import { useAppContext } from "../context/appContext";
+import Task from "./Task"
 
 const Lists = ({ data }) => {
-  console.log(data);
+  const [tasks, setTasks] = useState()
+  const {getTasksByListID} = useAppContext()
+ 
+  const fn = async()=>{
+    const res = await getTasksByListID(data.id)
+    setTasks(res.tasks)
+  }
+
+  useEffect(()=>{
+    fn()
+  }, [])
+  console.log(tasks);
+  
   return (
     <div className="lists">
       <div className="listHeader">
@@ -12,6 +26,11 @@ const Lists = ({ data }) => {
           <GrAddCircle />
         </div>
       </div>
+      <div>{tasks?.map((item, i)=>{
+        return(
+          <div key={i}><Task/></div>
+        )
+      })}</div>
     </div>
   );
 };

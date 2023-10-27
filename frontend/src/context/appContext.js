@@ -106,6 +106,16 @@ const AppProvider = ({ children }) => {
     }
   }
 
+  const getTasksByListID = async(id)=>{
+    try {
+      const res = await authFetch.get(`/task/${id}`)
+      return res.data
+    } catch (error) {
+      console.log(error);
+      return null
+    }
+  }
+
   const logoutUser = () => {
     dispatch({ type: LOGOUT_USER });
     removeUserFromLocalStorage();
@@ -118,7 +128,8 @@ const AppProvider = ({ children }) => {
         setupUser,
         logoutUser,
         getAllLists,
-        createList
+        createList,
+        getTasksByListID
       }}
     >
       <div>{children}</div>
