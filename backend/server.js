@@ -11,6 +11,7 @@ const morgan = require("morgan");
 // routes
 const authRouter = require("./routes/authRoute");
 const listRouter = require("./Routes/listRoute.js")
+const taskRouter = require("./Routes/taskRoute.js")
 // middleware
 const notFoundMiddleware = require("./Middleware/not-found.js")
 const errorHandlerMiddleware = require("./Middleware/error-handler.js")
@@ -26,6 +27,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/list", listRouter); 
+app.use("/api/v1/task", taskRouter); 
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

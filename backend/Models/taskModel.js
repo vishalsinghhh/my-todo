@@ -7,6 +7,10 @@ module.exports = (sequelize, DataTypes) => {
         completed: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
+        },
+        listId: {
+            type: DataTypes.INTEGER, 
+            allowNull: false 
         }
     }, {
         timestamps: true
