@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import { useAppContext } from "../context/appContext";
 import Lists from "../components/Lists";
 import "./MyTodo.css";
+import { GrAddCircle } from 'react-icons/gr';
 
 const MyTodo = () => {
   const { getAllLists } = useAppContext();
@@ -14,9 +15,9 @@ const MyTodo = () => {
       setLists(res);
     };
     fn();
-  }, []);
+  });
 
-  console.log(lists?.lists);
+  
   return (
     <div className="main">
       <Navbar />
@@ -29,6 +30,11 @@ const MyTodo = () => {
               </div>
             );
           })}
+
+          <div className="createList">
+            <div className="create">Create New List</div>
+            <GrAddCircle className="GrAddCircle"/>
+          </div>
         </div>
       </div>
     </div>

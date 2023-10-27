@@ -1,4 +1,9 @@
 .lists{
     display: flex;
-    width: 200px;
+    width: 280px;
+    background: #F0F0F0;
+    margin: 10px;
+}
+.create{
+    margin-top: 20px;
 }
