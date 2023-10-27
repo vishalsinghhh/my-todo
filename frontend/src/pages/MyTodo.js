@@ -4,24 +4,49 @@ import { useAppContext } from "../context/appContext";
 import Lists from "../components/Lists";
 import "./MyTodo.css";
 import { GrAddCircle } from 'react-icons/gr';
+import Modal from "../components/Modal";
+import "../components/Modal.css"
 
 const MyTodo = () => {
-  const { getAllLists } = useAppContext();
+  const { getAllLists, createList } = useAppContext();
   const [lists, setLists] = useState();
-
+  const [listName, setListName] = useState()
+  const [isModalOpen, setModalOpen] = useState(false);
+  const fn = async () => {
+    const res = await getAllLists();
+    setLists(res);
+  };
   useEffect(() => {
-    const fn = async () => {
-      const res = await getAllLists();
-      setLists(res);
-    };
+    
     fn();
-  });
+  },[]);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  const onSubmit=async()=>{
+    await createList(listName)
+    const res = await getAllLists();
+    setLists(res);
+    setModalOpen(false)
+  }
 
   
   return (
     <div className="main">
       <Navbar />
+      
       <div className="content">
+      <Modal isOpen={isModalOpen} closeModal={closeModal}>
+        <h2>Create list</h2>
+        <input type="text" onChange={(e)=>{setListName(e.target.value)}}/>
+        <button onClick={()=>{onSubmit()}}>Create</button>
+      </Modal>
         <div className="listMain">
           {lists?.lists.map((item, i) => {
             return (
@@ -31,12 +56,13 @@ const MyTodo = () => {
             );
           })}
 
-          <div className="createList">
+          <div className="createList" onClick={openModal}>
             <div className="create">Create New List</div>
             <GrAddCircle className="GrAddCircle"/>
           </div>
         </div>
       </div>
+      
     </div>
   );
 };
