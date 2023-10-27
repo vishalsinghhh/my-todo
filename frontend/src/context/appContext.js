@@ -86,6 +86,16 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const getAllLists = async ()=>{
+    try {
+      const res = await authFetch.get('list')
+      return res.data
+    } catch (error) {
+      console.log(error);
+      return null
+    }
+  }
+
   const logoutUser = () => {
     dispatch({ type: LOGOUT_USER });
     removeUserFromLocalStorage();
@@ -97,6 +107,7 @@ const AppProvider = ({ children }) => {
         ...state,
         setupUser,
         logoutUser,
+        getAllLists
       }}
     >
       <div>{children}</div>
