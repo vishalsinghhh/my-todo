@@ -3,8 +3,10 @@ const express = require("express");
 const sequelize = require("sequelize");
 const dotenv = require("dotenv").config();
 const db = require("./Models");
+// cors
+const corsMiddleware = require("./cors");
 const app = express();
-
+app.use(corsMiddleware);
 const morgan = require("morgan");
 // routes
 const authRouter = require("./routes/authRoute");
