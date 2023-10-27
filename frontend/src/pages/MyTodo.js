@@ -6,6 +6,7 @@ import "./MyTodo.css";
 import { GrAddCircle } from "react-icons/gr";
 import Modal from "../components/Modal";
 import "../components/Modal.css";
+import { DragDropContext } from 'react-beautiful-dnd';
 
 const MyTodo = () => {
   const { getAllLists, createList } = useAppContext();
@@ -45,7 +46,18 @@ const MyTodo = () => {
     setModalOpen(false);
   };
 
+  const onDragEnd = (result)=>{
+   const {source, destination} = result
+
+   if(!destination) return
+
+   if(destination.droppableId===source.droppableId && destination.index===source.index) return
+
+  //  let add, active = 
+  }
+
   return (
+    <DragDropContext onDragEnd={onDragEnd}>
     <div className="main">
       <Navbar />
 
@@ -86,6 +98,7 @@ const MyTodo = () => {
         </div>
       </div>
     </div>
+    </DragDropContext>
   );
 };
 

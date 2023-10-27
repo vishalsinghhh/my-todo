@@ -36,3 +36,6 @@
 .modal1{
   z-index: 9999;
 }
+.taskMain{
+  cursor: grab;
+}
