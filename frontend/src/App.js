@@ -10,7 +10,7 @@ function App() {
         <Route exact path="/" element={<Login />} />
       </Routes>
       <Routes>
-        <Route exact path="/my-todo" element={<MyTodo />} />
+        <Route exact path="/my-todo" element={<ProtectedRoute><MyTodo /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   );

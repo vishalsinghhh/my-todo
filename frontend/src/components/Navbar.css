@@ -1,0 +1,15 @@
+.navbar{
+    display: flex;
+    justify-content: space-around;
+    height: 60px;
+    align-items: center;
+    background: #D9D9D9;
+}
+.gap{
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.logout{
+    cursor: pointer;
+}
