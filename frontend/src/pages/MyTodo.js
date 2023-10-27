@@ -30,7 +30,7 @@ const MyTodo = () => {
   };
 
   const onSubmit=async()=>{
-    if(listName){
+    if(!listName){
       return
     }
     try {
@@ -51,11 +51,12 @@ const MyTodo = () => {
       <Navbar />
       
       <div className="content">
-      <Modal isOpen={isModalOpen} closeModal={closeModal}>
+      <div className="modal1"><Modal isOpen={isModalOpen} closeModal={closeModal}>
         <h2>Create list</h2>
         <input type="text" onChange={(e)=>{setListName(e.target.value)}}/>
         <button onClick={()=>{onSubmit()}} className="createBTN">{!loading?'Create':'loading...'}</button>
-      </Modal>
+      </Modal></div>
+      
         <div className="listMain">
           {lists?.lists.map((item, i) => {
             return (

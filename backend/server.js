@@ -25,7 +25,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/list", listRouter);
+app.use("/api/v1/list", listRouter); 
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
