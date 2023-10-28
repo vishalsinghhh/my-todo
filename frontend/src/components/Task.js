@@ -6,16 +6,14 @@ const Task = ({ data, index, change, stateResult }) => {
   const {changeData, currData} = useAppContext()
   useEffect(()=>{
     if(stateResult){
-      if(data.id == stateResult.draggableId){
+      if(data?.id == stateResult.draggableId){
         changeData(data)
       }
     }
   }, [change])
-  useEffect(()=>{
-    console.log(currData);
-  }, [currData])
+
   return (
-    <Draggable draggableId={data.id.toString()} index={index}>
+    <Draggable draggableId={data?.id.toString()} index={index}>
       {(provided) => (
         <div
           {...provided.draggableProps}
@@ -23,7 +21,7 @@ const Task = ({ data, index, change, stateResult }) => {
           ref={provided.innerRef}
           className="taskMain"
         >
-          {data.description}
+          {data?.description}
         </div>
       )}
     </Draggable>

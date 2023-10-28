@@ -10,7 +10,7 @@ const Lists = ({ data, change, stateResult }) => {
   const [taskName, setTaskName] = useState(false);
   const [loading, setLoading] = useState(false);
   const [tasks, setTasks] = useState();
-  const { getTasksByListID, createTask } = useAppContext();
+  const { getTasksByListID, createTask, currData } = useAppContext();
   const [isModalOpen, setModalOpen] = useState(false);
 
   const fn = async () => {
@@ -30,19 +30,31 @@ const Lists = ({ data, change, stateResult }) => {
     setModalOpen(false);
   };
 
-  const onSubmit = async()=>{
-    
+  const onSubmit = async () => {
     try {
-      setLoading(true)
-      await createTask(data.id, taskName)
-      setModalOpen(false)
-    fn()
+      setLoading(true);
+      await createTask(data.id, taskName);
+      setModalOpen(false);
+      fn();
     } catch (error) {
-      setLoading(false)
+      setLoading(false);
     }
-    setLoading(false)
-    
-  }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    if (data.id == stateResult?.destination.droppableId) {
+      if (currData) {
+        const updatedTasks = [...tasks, currData];
+        setTasks(updatedTasks);
+      }
+    }
+    if(data.id == stateResult?.source.droppableId){
+      const filteredTasks = tasks.filter((task) => task.id != stateResult.draggableId);
+      console.log(filteredTasks);
+      setTasks(filteredTasks);
+    }
+  }, [currData]);
 
   return (
     <div className="lists">
@@ -76,7 +88,12 @@ const Lists = ({ data, change, stateResult }) => {
               {tasks?.map((item, i) => {
                 return (
                   <div key={i}>
-                    <Task data={item} index={i} change={change} stateResult={stateResult}/>
+                    <Task
+                      data={item}
+                      index={i}
+                      change={change}
+                      stateResult={stateResult}
+                    />
                   </div>
                 );
               })}
