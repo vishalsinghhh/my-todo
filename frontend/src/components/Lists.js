@@ -10,7 +10,7 @@ const Lists = ({ data, change, stateResult }) => {
   const [taskName, setTaskName] = useState(false);
   const [loading, setLoading] = useState(false);
   const [tasks, setTasks] = useState();
-  const { getTasksByListID, createTask, currData } = useAppContext();
+  const { getTasksByListID, createTask, currData, completeTask } = useAppContext();
   const [isModalOpen, setModalOpen] = useState(false);
 
   const fn = async () => {
@@ -66,6 +66,10 @@ const Lists = ({ data, change, stateResult }) => {
       }
     }
   }, [currData, stateResult]);
+  const handleCheckboxClick = async(taskId, isChecked) => {
+    const res = await completeTask(taskId, data.id)
+    setTasks(res.tasks)
+  };
 
   return (
     <div className="lists">
@@ -108,6 +112,7 @@ const Lists = ({ data, change, stateResult }) => {
                       index={i}
                       change={change}
                       stateResult={stateResult}
+                      onCheckboxClick={handleCheckboxClick}
                     />
                   </div>
                 );

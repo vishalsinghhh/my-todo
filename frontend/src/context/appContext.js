@@ -138,6 +138,16 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const completeTask = async(taskId, listId)=>{
+    try {
+      const res = await authFetch.patch(`/task/${listId}/${taskId}`);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+
   const changeData = (data)=>{
     dispatch({ type: CHANGE_DATA, payload: { data } });
   }
@@ -158,6 +168,7 @@ const AppProvider = ({ children }) => {
         createTask,
         transferTask,
         changeData,
+        completeTask,
         getTasksByListID,
       }}
     >
