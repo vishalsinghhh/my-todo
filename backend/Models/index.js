@@ -1,18 +1,18 @@
 const { Sequelize, DataTypes } = require("sequelize");
 
-const sequelize = new Sequelize(process.env.DR_URI, {dialect: "postgres"})
+// const sequelize = new Sequelize(process.env.DR_URI, {dialect: "postgres"})
 
-// const sequelize = new Sequelize(process.env.POSTGRES_DATABASE, process.env.POSTGRES_USER, process.env.POSTGRES_PASSWORD, {
-//   host: process.env.POSTGRES_HOST,
-//   dialect: "postgres",
-//   port: 5432,
-//   ssl: true, 
-//   dialectOptions: {
-//     ssl: {
-//       require: true,
-//     },
-//   },
-// });
+const sequelize = new Sequelize(process.env.POSTGRES_DATABASE, process.env.POSTGRES_USER, process.env.POSTGRES_PASSWORD, {
+  host: process.env.POSTGRES_HOST,
+  dialect: "postgres",
+  port: 5432,
+  ssl: true, 
+  dialectOptions: {
+    ssl: {
+      require: true,
+    },
+  },
+});
 
 //checking if connection is done
 sequelize
