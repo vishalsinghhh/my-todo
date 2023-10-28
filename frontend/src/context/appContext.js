@@ -30,7 +30,7 @@ const AppProvider = ({ children }) => {
 
   // axios
   const authFetch = axios.create({
-    baseURL: `/api/v1`,
+    baseURL: `${process.env.REACT_APP_API}/api/v1`,
   });
 
   // request
@@ -71,7 +71,7 @@ const AppProvider = ({ children }) => {
     dispatch({ type: SETUP_USER_BEGIN });
     try {
       const { data } = await axios.post(
-        `/api/v1/auth/${endPoint}`,
+        `${process.env.REACT_APP_API}/api/v1/auth/${endPoint}`,
         currentUser
       );
       const { user, token } = data;

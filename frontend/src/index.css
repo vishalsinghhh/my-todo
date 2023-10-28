@@ -49,6 +49,7 @@ code {
   width: 185px;
   height: 50px;
   margin-top: 50px;
+  cursor: pointer;
 }
 .isRegister{
   margin-top: 20px;
