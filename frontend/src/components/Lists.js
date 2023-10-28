@@ -54,7 +54,7 @@ const Lists = ({ data, change, stateResult }) => {
       console.log(filteredTasks);
       setTasks(filteredTasks);
     }
-  }, [currData]);
+  }, [currData, stateResult]);
 
   return (
     <div className="lists">
