@@ -6,10 +6,10 @@ import "./MyTodo.css";
 import { GrAddCircle } from "react-icons/gr";
 import Modal from "../components/Modal";
 import "../components/Modal.css";
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext } from "react-beautiful-dnd";
 
 const MyTodo = () => {
-  const { getAllLists, createList } = useAppContext();
+  const { getAllLists, createList, transferTask } = useAppContext();
   const [loading, setLoading] = useState(false);
   const [lists, setLists] = useState();
   const [listName, setListName] = useState();
@@ -45,59 +45,66 @@ const MyTodo = () => {
     setLoading(false);
     setModalOpen(false);
   };
+  const transfer = async (draggableId, droppableId) => {
+    await transferTask(draggableId, droppableId);
+  };
+  const onDragEnd = (result) => {
+    const { source, destination, draggableId } = result;
 
-  const onDragEnd = (result)=>{
-   const {source, destination} = result
+    if (!destination) return;
 
-   if(!destination) return
-
-   if(destination.droppableId===source.droppableId && destination.index===source.index) return
-
-  //  let add, active = 
-  }
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    )
+      return;
+    if (destination.droppableId !== source.droppableId) {
+      transfer(draggableId, destination.droppableId);
+    }
+  };
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-    <div className="main">
-      <Navbar />
+      <div className="main">
+        <Navbar />
 
-      <div className="content">
-        <div className="modal1">
-          <Modal isOpen={isModalOpen} closeModal={closeModal}>
-            <h2>Create list</h2>
-            <input
-              type="text"
-              onChange={(e) => {
-                setListName(e.target.value);
-              }}
-            />
-            <button
-              onClick={() => {
-                onSubmit();
-              }}
-              className="createBTN"
-            >
-              {!loading ? "Create" : "loading..."}
-            </button>
-          </Modal>
-        </div>
+        <div className="content">
+          <div className="modal1">
+            <Modal isOpen={isModalOpen} closeModal={closeModal}>
+              <h2>Create list</h2>
+              <input
+                type="text"
+                onChange={(e) => {
+                  setListName(e.target.value);
+                }}
+              />
+              <button
+                onClick={() => {
+                  onSubmit();
+                }}
+                className="createBTN"
+              >
+                {!loading ? "Create" : "loading..."}
+              </button>
+            </Modal>
+          </div>
 
-        <div className="listMain">
-          {lists?.lists.map((item, i) => {
-            return (
-              <div key={i}>
-                <Lists data={item} />
-              </div>
-            );
-          })}
+          <div className="listMain">
+            {lists?.lists.map((item, i) => {
+              return (
+                <div key={i}>
+                  <Lists data={item} />
+                </div>
+              );
+            })}
 
-          <div className="createList" onClick={openModal}>
-            <div className="create">Create New List</div>
-            <GrAddCircle className="GrAddCircle" />
+            <div className="createList" onClick={openModal}>
+              <div className="create">Create New List</div>
+              <GrAddCircle className="GrAddCircle" />
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </DragDropContext>
   );
 };

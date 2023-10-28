@@ -86,45 +86,55 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  const getAllLists = async ()=>{
+  const getAllLists = async () => {
     try {
-      const res = await authFetch.get('list')
-      return res.data
+      const res = await authFetch.get("list");
+      return res.data;
     } catch (error) {
       console.log(error);
-      return null
+      return null;
     }
-  }
+  };
 
-  const createList = async(name)=>{
+  const createList = async (name) => {
     try {
-      const res = await authFetch.post('/list', {name})
-      return res.data
+      const res = await authFetch.post("/list", { name });
+      return res.data;
     } catch (error) {
       console.log(error);
-      return null
+      return null;
     }
-  }
+  };
 
-  const createTask = async(listId, description)=>{
+  const createTask = async (listId, description) => {
     try {
-      const res = await authFetch.post('/task', {listId, description})
-      return res.data
+      const res = await authFetch.post("/task", { listId, description });
+      return res.data;
     } catch (error) {
       console.log(error);
-      return null
+      return null;
     }
-  }
+  };
 
-  const getTasksByListID = async(id)=>{
+  const getTasksByListID = async (id) => {
     try {
-      const res = await authFetch.get(`/task/${id}`)
-      return res.data
+      const res = await authFetch.get(`/task/${id}`);
+      return res.data;
     } catch (error) {
       console.log(error);
-      return null
+      return null;
     }
-  }
+  };
+
+  const transferTask = async (taskId, newListId) => {
+    try {
+      const res = await authFetch.patch(`/task`, { taskId, newListId });
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
 
   const logoutUser = () => {
     dispatch({ type: LOGOUT_USER });
@@ -140,7 +150,8 @@ const AppProvider = ({ children }) => {
         getAllLists,
         createList,
         createTask,
-        getTasksByListID
+        transferTask,
+        getTasksByListID,
       }}
     >
       <div>{children}</div>
