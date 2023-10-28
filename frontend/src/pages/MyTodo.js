@@ -52,22 +52,22 @@ const MyTodo = () => {
   };
   const onDragEnd = (result) => {
     const { source, destination, draggableId } = result;
-    if (destination.droppableId == source.droppableId && destination.index == source.index) {
-      console.log("they're equal");
+    if (destination?.droppableId == source.droppableId && destination.index == source.index) {
       return;
     }
 
     if (!destination) return;
 
     if (
-      destination.droppableId == source.droppableId &&
-      destination.index == source.index
+      destination?.droppableId == source.droppableId &&
+      destination?.index == source.index
     )
       return;
-    if (destination.droppableId !== source.droppableId) {
+    if (destination?.droppableId !== source.droppableId) {
+      
+      transfer(draggableId, destination.droppableId);
       setChange(!change)
       setStateResult(result)
-      transfer(draggableId, destination.droppableId);
     }
   };
 

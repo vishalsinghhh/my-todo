@@ -43,16 +43,27 @@ const Lists = ({ data, change, stateResult }) => {
   };
 
   useEffect(() => {
-    if (data.id == stateResult?.destination.droppableId) {
-      if (currData) {
+    if (currData) {
+      if (data.id == stateResult?.destination.droppableId) {
         const updatedTasks = [...tasks, currData];
-        setTasks(updatedTasks);
+        const uniqueUpdatedTasks = updatedTasks.filter(
+          (task, index, self) =>
+            self.findIndex((t) => t.id === task.id) === index
+        );
+
+        setTasks(uniqueUpdatedTasks);
       }
-    }
-    if(data.id == stateResult?.source.droppableId){
-      const filteredTasks = tasks.filter((task) => task.id != stateResult.draggableId);
-      console.log(filteredTasks);
-      setTasks(filteredTasks);
+      if (data.id == stateResult?.source.droppableId) {
+        const filteredTasks = tasks.filter(
+          (task) => task.id != stateResult.draggableId
+        );
+        console.log(filteredTasks);
+        let flag = false;
+
+        if (!flag) {
+          setTasks(filteredTasks);
+        }
+      }
     }
   }, [currData, stateResult]);
 
@@ -77,7 +88,11 @@ const Lists = ({ data, change, stateResult }) => {
       </Modal>
       <Droppable droppableId={data.id.toString()}>
         {(provided) => (
-          <div ref={provided.innerRef} {...provided.droppableProps}>
+          <div
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+            className="dropMain"
+          >
             <div className="listHeader">
               {data.name}
               <div className="taskAdd" onClick={openModal}>

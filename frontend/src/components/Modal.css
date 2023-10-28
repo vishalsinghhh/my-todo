@@ -1,6 +1,7 @@
 /* Modal.css */
 
 .modal {
+  z-index: 9999 !important;
     display: flex;
     justify-content: center;
     align-items: center;

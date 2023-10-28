@@ -21,6 +21,8 @@ const Task = ({ data, index, change, stateResult }) => {
           ref={provided.innerRef}
           className="taskMain"
         >
+        <input type="checkbox" className="myCheckbox"/>
+        
           {data?.description}
         </div>
       )}
