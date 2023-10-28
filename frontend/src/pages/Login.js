@@ -25,78 +25,83 @@ const Login = () => {
   }, [user, navigate]);
 
   return (
-    <div>
-      <div className="loginTo">{isLogin ? "Login" : "Register"} to play</div>
-      <div>
-        {!isLogin && (
-          <>
+    <div className="LoginMain">
+      <div className="main11">
+        <div className="loginTo">{isLogin ? "Login" : "Register"} to start</div>
+        <div>
+          <div>
+            {!isLogin && (
+              <>
+                <input
+                  type="text"
+                  value={name}
+                  placeholder="Full Name"
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
+                />
+                <div className="underline"></div>
+              </>
+            )}
+          </div>
+          <div>
             <input
-              type="text"
-              value={name}
-              placeholder="Full Name"
+              type="email"
+              value={email}
+              placeholder="Email"
               onChange={(e) => {
-                setName(e.target.value);
+                setEmail(e.target.value);
               }}
             />
             <div className="underline"></div>
-          </>
-        )}
-      </div>
-      <div>
-        <input
-          type="email"
-          value={email}
-          placeholder="Email"
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-        />
-        <div className="underline"></div>
-      </div>
-      <div>
-        <input
-          type="password"
-          value={password}
-          placeholder="Password"
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-        />
-        <div className="underline"></div>
-        <div className={isLogin ? "isRegister" : "isLogin"}>
-          {isLogin ? (
-            <div>
-              Not yet registered?{" "}
-              <span
-                onClick={() => {
-                  setIsLogin(false);
-                }}
-                className="register"
-              >
-                Register
-              </span>
-            </div>
-          ) : (
-            <div>
-              Already a member?{" "}
-              <span
-                onClick={() => {
-                  setIsLogin(true);
-                }}
-                className="register"
-              >
-                Login
-              </span>
-            </div>
-          )}
+          </div>
+
+          <div>
+            <input
+              type="password"
+              value={password}
+              placeholder="Password"
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />
+          </div>
+          <div className="underline"></div>
+          <div className={isLogin ? "isRegister" : "isLogin"}>
+            {isLogin ? (
+              <div>
+                Not yet registered?{" "}
+                <span
+                  onClick={() => {
+                    setIsLogin(false);
+                  }}
+                  className="register"
+                >
+                  Register
+                </span>
+              </div>
+            ) : (
+              <div>
+                Already a member?{" "}
+                <span
+                  onClick={() => {
+                    setIsLogin(true);
+                  }}
+                  className="register"
+                >
+                  Login
+                </span>
+              </div>
+            )}
+          </div>
+          <button
+            onClick={() => {
+              loginRegister(isLogin ? "login" : "register");
+            }}
+          >
+            {isLogin ? "Login" : "Register"}
+          </button>
         </div>
-        <button
-          onClick={() => {
-            loginRegister(isLogin ? "login" : "register");
-          }}
-        >
-          {isLogin ? "Login" : "Register"}
-        </button>
       </div>
     </div>
   );
