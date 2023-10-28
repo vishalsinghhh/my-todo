@@ -6,7 +6,7 @@ import Task from "./Task";
 import { Droppable } from "react-beautiful-dnd";
 import Modal from "./Modal";
 
-const Lists = ({ data }) => {
+const Lists = ({ data, change, stateResult }) => {
   const [taskName, setTaskName] = useState(false);
   const [loading, setLoading] = useState(false);
   const [tasks, setTasks] = useState();
@@ -76,7 +76,7 @@ const Lists = ({ data }) => {
               {tasks?.map((item, i) => {
                 return (
                   <div key={i}>
-                    <Task data={item} index={i} />
+                    <Task data={item} index={i} change={change} stateResult={stateResult}/>
                   </div>
                 );
               })}

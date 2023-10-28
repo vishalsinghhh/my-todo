@@ -7,6 +7,7 @@ import {
   SETUP_USER_SUCCESS,
   SETUP_USER_ERROR,
   LOGOUT_USER,
+  CHANGE_DATA
 } from "./actions";
 
 const token = localStorage.getItem("token");
@@ -19,6 +20,7 @@ const initialState = {
   alertType: "",
   user: user ? JSON.parse(user) : null,
   token: token,
+  currData:null
 };
 
 const AppContext = React.createContext();
@@ -136,6 +138,10 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const changeData = (data)=>{
+    dispatch({ type: CHANGE_DATA, payload: { data } });
+  }
+
   const logoutUser = () => {
     dispatch({ type: LOGOUT_USER });
     removeUserFromLocalStorage();
@@ -151,6 +157,7 @@ const AppProvider = ({ children }) => {
         createList,
         createTask,
         transferTask,
+        changeData,
         getTasksByListID,
       }}
     >

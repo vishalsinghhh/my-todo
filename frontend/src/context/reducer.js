@@ -2,7 +2,8 @@ import {
     SETUP_USER_BEGIN,
     SETUP_USER_SUCCESS,
     SETUP_USER_ERROR,
-    LOGOUT_USER
+    LOGOUT_USER,
+    CHANGE_DATA
   } from "./actions";
   
   const reducer = (state, action) => {
@@ -31,6 +32,12 @@ import {
         ...state,
         user: null,
         token: null
+      }
+    }
+    if (action.type === CHANGE_DATA) {
+      return {
+        ...state,
+        currData: action.payload.data
       }
     }
   };

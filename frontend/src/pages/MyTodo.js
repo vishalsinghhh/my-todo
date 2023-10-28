@@ -14,6 +14,8 @@ const MyTodo = () => {
   const [lists, setLists] = useState();
   const [listName, setListName] = useState();
   const [isModalOpen, setModalOpen] = useState(false);
+  const [change, setChange] = useState(false);
+  const [stateResult, setStateResult] = useState();
   const fn = async () => {
     const res = await getAllLists();
     setLists(res);
@@ -59,6 +61,8 @@ const MyTodo = () => {
     )
       return;
     if (destination.droppableId !== source.droppableId) {
+      setChange(!change)
+      setStateResult(result)
       transfer(draggableId, destination.droppableId);
     }
   };
@@ -93,7 +97,7 @@ const MyTodo = () => {
             {lists?.lists.map((item, i) => {
               return (
                 <div key={i}>
-                  <Lists data={item} />
+                  <Lists data={item} change={change} stateResult={stateResult}/>
                 </div>
               );
             })}

@@ -4,3 +4,4 @@ export const SETUP_USER_ERROR = 'SETUP_USER_ERROR'
 
 
 export const LOGOUT_USER = 'LOGOUT_USER'
+export const CHANGE_DATA = 'CHANGE_DATA'

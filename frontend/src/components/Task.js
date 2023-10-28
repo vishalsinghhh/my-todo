@@ -1,7 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Draggable } from "react-beautiful-dnd";
+import { useAppContext } from "../context/appContext";
 
-const Task = ({ data, index }) => {
+const Task = ({ data, index, change, stateResult }) => {
+  const {changeData, currData} = useAppContext()
+  useEffect(()=>{
+    if(stateResult){
+      if(data.id == stateResult.draggableId){
+        changeData(data)
+      }
+    }
+  }, [change])
+  useEffect(()=>{
+    console.log(currData);
+  }, [currData])
   return (
     <Draggable draggableId={data.id.toString()} index={index}>
       {(provided) => (
