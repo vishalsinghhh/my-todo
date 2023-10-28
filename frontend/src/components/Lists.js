@@ -4,10 +4,14 @@ import { GrAddCircle } from "react-icons/gr";
 import { useAppContext } from "../context/appContext";
 import Task from "./Task";
 import { Droppable } from "react-beautiful-dnd";
+import Modal from "./Modal";
 
 const Lists = ({ data }) => {
+  const [taskName, setTaskName] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [tasks, setTasks] = useState();
-  const { getTasksByListID } = useAppContext();
+  const { getTasksByListID, createTask } = useAppContext();
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const fn = async () => {
     const res = await getTasksByListID(data.id);
@@ -17,16 +21,54 @@ const Lists = ({ data }) => {
   useEffect(() => {
     fn();
   }, []);
-  console.log(tasks);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  const onSubmit = async()=>{
+    
+    try {
+      setLoading(true)
+      await createTask(data.id, taskName)
+      setModalOpen(false)
+    fn()
+    } catch (error) {
+      setLoading(false)
+    }
+    setLoading(false)
+    
+  }
 
   return (
     <div className="lists">
+      <Modal isOpen={isModalOpen} closeModal={closeModal}>
+        <h2>Create Task in {data.name}</h2>
+        <input
+          type="text"
+          onChange={(e) => {
+            setTaskName(e.target.value);
+          }}
+        />
+        <button
+          onClick={() => {
+            onSubmit();
+          }}
+          className="createBTN"
+        >
+          {!loading ? "Create" : "loading..."}
+        </button>
+      </Modal>
       <Droppable droppableId={data.id.toString()}>
         {(provided) => (
           <div ref={provided.innerRef} {...provided.droppableProps}>
             <div className="listHeader">
               {data.name}
-              <div className="taskAdd">
+              <div className="taskAdd" onClick={openModal}>
                 <GrAddCircle />
               </div>
             </div>

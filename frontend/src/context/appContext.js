@@ -106,6 +106,16 @@ const AppProvider = ({ children }) => {
     }
   }
 
+  const createTask = async(listId, description)=>{
+    try {
+      const res = await authFetch.post('/task', {listId, description})
+      return res.data
+    } catch (error) {
+      console.log(error);
+      return null
+    }
+  }
+
   const getTasksByListID = async(id)=>{
     try {
       const res = await authFetch.get(`/task/${id}`)
@@ -129,6 +139,7 @@ const AppProvider = ({ children }) => {
         logoutUser,
         getAllLists,
         createList,
+        createTask,
         getTasksByListID
       }}
     >
