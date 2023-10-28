@@ -52,12 +52,16 @@ const MyTodo = () => {
   };
   const onDragEnd = (result) => {
     const { source, destination, draggableId } = result;
+    if (destination.droppableId == source.droppableId && destination.index == source.index) {
+      console.log("they're equal");
+      return;
+    }
 
     if (!destination) return;
 
     if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
+      destination.droppableId == source.droppableId &&
+      destination.index == source.index
     )
       return;
     if (destination.droppableId !== source.droppableId) {
